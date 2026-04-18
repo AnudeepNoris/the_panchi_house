@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Distribution
+dist/
+build/
+
+# Local environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# PDF files (not needed in repo, menu is accessed locally)
+*.pdf
+
+# Unneeded image files (only keep optimized JPGs)
+src/images/*.ppm
+src/images/*.png
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
