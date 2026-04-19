@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice - Website Development</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+        }
+        .header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #F59B0A;
+            padding-bottom: 20px;
+        }
+        .header h1 {
+            color: #F59B0A;
+            font-size: 28px;
+            grid-column: 1 / -1;
+            margin-bottom: 15px;
+        }
+        .invoice-details h3 {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .invoice-details p {
+            font-size: 13px;
+            margin: 2px 0;
+        }
+        h2 {
+            color: #3D2817;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-left: 4px solid #F59B0A;
+            padding-left: 12px;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table th {
+            background: #F59B0A;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        .total-row {
+            font-weight: bold;
+            background: #FEF3C7 !important;
+            font-size: 16px;
+        }
+        .payment-info {
+            background: #f0f0f0;
+            padding: 15px;
+            border-left: 4px solid #F59B0A;
+            margin: 20px 0;
+        }
+        .payment-info h3 {
+            margin-bottom: 10px;
+            color: #3D2817;
+        }
+        .bank-details {
+            font-size: 13px;
+            line-height: 1.8;
+        }
+        .important {
+            background: #FEF3C7;
+            border-left: 4px solid #F59B0A;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+        .important strong {
+            color: #F59B0A;
+        }
+        .print-button {
+            background: #F59B0A;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            font-size: 12px;
+            color: #666;
+        }
+        @media print {
+            body { background: white; }
+            .container { max-width: 100%; margin: 0; padding: 0; }
+            .print-button { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="print-button" onclick="window.print()">🖨️ Print to PDF</button>
+
+        <div class="header">
+            <h1>📧 INVOICE</h1>
+            <div class="invoice-details">
+                <h3>Invoice Number:</h3>
+                <p>INV-2026-001</p>
+                <h3 style="margin-top: 10px;">Invoice Date:</h3>
+                <p>19 April 2026</p>
+            </div>
+            <div class="invoice-details">
+                <h3>Due Date:</h3>
+                <p>24 April 2026</p>
+                <h3 style="margin-top: 10px;">Status:</h3>
+                <p style="color: #F59B0A; font-weight: bold;">🔴 PENDING</p>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+            <div>
+                <h3 style="color: #3D2817; margin-bottom: 10px;">FROM (Service Provider):</h3>
+                <p><strong>Anudeep Noris</strong></p>
+                <p>Website Developer</p>
+                <p>📧 Email: <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+                <p>📱 Phone: <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+                <p>📍 Location: <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+            </div>
+            <div>
+                <h3 style="color: #3D2817; margin-bottom: 10px;">BILL TO (Client):</h3>
+                <p><strong>The Panchi House</strong></p>
+                <p>Owner: <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+                <p>Phone: <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+                <p>Email: <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+                <p>Address: <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+            </div>
+        </div>
+
+        <h2>📋 INVOICE DETAILS</h2>
+        <table>
+            <tr>
+                <th>#</th>
+                <th>Description</th>
+                <th style="text-align: right;">Amount</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Website Development (Restaurant Site + Ordering System)</td>
+                <td style="text-align: right;">₹60,000</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Online Ordering System with Payment Gateway</td>
+                <td style="text-align: right;">₹25,000</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Admin Dashboard & Support Setup</td>
+                <td style="text-align: right;">₹3,000</td>
+            </tr>
+            <tr class="total-row">
+                <td colspan="2" style="text-align: right;">SUBTOTAL:</td>
+                <td style="text-align: right;">₹88,000</td>
+            </tr>
+        </table>
+
+        <h2>💰 PAYMENT SCHEDULE</h2>
+        <p style="margin-bottom: 15px;">This invoice is for <strong>50% ADVANCE payment</strong> to kickstart the project.</p>
+        
+        <table>
+            <tr>
+                <th>Payment Round</th>
+                <th>Amount</th>
+                <th>Due Date</th>
+                <th style="text-align: center;">Status</th>
+            </tr>
+            <tr>
+                <td><strong>1. Advance (Week 1)</strong></td>
+                <td><strong>₹44,000</strong></td>
+                <td>24 April 2026</td>
+                <td style="text-align: center;">⏳ Now</td>
+            </tr>
+            <tr>
+                <td><strong>2. Mid-Project (Week 2)</strong></td>
+                <td><strong>₹26,400</strong></td>
+                <td>1 May 2026</td>
+                <td style="text-align: center;">⏳ Later</td>
+            </tr>
+            <tr>
+                <td><strong>3. Final (Week 4)</strong></td>
+                <td><strong>₹17,600</strong></td>
+                <td>8 May 2026</td>
+                <td style="text-align: center;">⏳ Later</td>
+            </tr>
+        </table>
+
+        <div class="important">
+            <strong>💡 Current Action Required:</strong><br>
+            Please transfer <strong>₹44,000</strong> (50% advance) to get started.
+        </div>
+
+        <h2>🏦 PAYMENT METHODS</h2>
+        <div class="payment-info">
+            <h3>Bank Transfer</h3>
+            <div class="bank-details">
+                <p><strong>Account Holder:</strong> Anudeep Noris</p>
+                <p><strong>Bank Name:</strong> <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+                <p><strong>Account Number:</strong> <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+                <p><strong>IFSC Code:</strong> <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+            </div>
+        </div>
+
+        <div class="payment-info">
+            <h3>Other Options</h3>
+            <p>💬 <strong>UPI:</strong> <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+            <p>💳 <strong>Cheque:</strong> Payable to Anudeep Noris</p>
+            <p>💰 <strong>Cash:</strong> On meeting (if possible)</p>
+        </div>
+
+        <h2>✅ WHAT'S INCLUDED IN THIS PROJECT</h2>
+        <ul style="margin-left: 20px; font-size: 13px;">
+            <li>Professional restaurant website with beautiful design</li>
+            <li>Full menu system with categories (70+ items)</li>
+            <li>19 Google reviews integrated</li>
+            <li>Featured dishes gallery with 3D effects</li>
+            <li>Online ordering system</li>
+            <li>Shopping cart with item customization</li>
+            <li>Delivery/Takeaway support</li>
+            <li>Payment gateway (Razorpay) integration</li>
+            <li>UPI, Card, Wallet payment options</li>
+            <li>Admin dashboard for order management</li>
+            <li>Order status tracking (Received → Preparing → Ready → Delivered)</li>
+            <li>Menu management (add, edit, delete items)</li>
+            <li>Mobile-responsive design (perfect on all devices)</li>
+            <li>Professional animations & effects</li>
+            <li>Contact form</li>
+            <li>Location/Map integration</li>
+            <li>SSL Certificate (secure https://)</li>
+            <li>6 months email support</li>
+            <li>Training session</li>
+            <li>First 3 months hosting (free)</li>
+        </ul>
+
+        <h2>📌 IMPORTANT NOTES</h2>
+        <div class="important">
+            <p>✓ Website will go live ONLY after full payment received</p>
+            <p>✓ First 2 revisions included in price</p>
+            <p>✓ Project starts immediately after 50% payment</p>
+            <p>✓ Weekly progress updates via email/WhatsApp</p>
+            <p>✓ Estimated timeline: 3-4 weeks</p>
+        </div>
+
+        <h2>🎯 NEXT STEPS</h2>
+        <ol style="margin-left: 20px; font-size: 13px;">
+            <li>Review this invoice</li>
+            <li>Confirm all details are correct</li>
+            <li>Make payment of ₹44,000</li>
+            <li>Send payment proof via WhatsApp</li>
+            <li>We start building immediately!</li>
+            <li>Receive weekly progress updates</li>
+            <li>Website goes live in ~4 weeks</li>
+        </ol>
+
+        <div class="payment-info" style="margin-top: 30px;">
+            <h3>Questions?</h3>
+            <p>📧 Email: <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+            <p>📱 Phone: <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+            <p>💬 WhatsApp: <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+        </div>
+
+        <div class="footer">
+            <p><strong>Thank you for choosing us!</strong></p>
+            <p>This invoice is valid for 15 days.</p>
+            <p style="margin-top: 10px; color: #999;">Invoice created: 19 April 2026</p>
+        </div>
+    </div>
+</body>
+</html>
