@@ -120,12 +120,26 @@ const styles = `
     font-size: 18px;
     text-decoration: none;
     color: var(--saffron);
-    transition: all 0.2s;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+  }
+
+  .social-nav a i {
+    font-size: 20px;
+    transition: all 0.3s ease;
   }
 
   .social-nav a:hover { 
-    transform: scale(1.2);
-    color: white;
+    color: var(--warm-orange);
+    transform: scale(1.15) rotate(5deg);
+  }
+
+  .social-nav a:hover i {
+    filter: drop-shadow(0 0 6px var(--saffron));
   }
 
   /* HERO */
@@ -495,43 +509,161 @@ const styles = `
     line-height: 1.7;
   }
 
-  /* TESTIMONIALS */
+  /* REVIEWS */
   .testimonials-section {
     background: linear-gradient(135deg, #3D2817 0%, #4D3A28 100%);
     color: white;
+    padding-top: 80px;
   }
 
-  .testimonials-grid {
+  .reviews-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 32px;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 28px;
     margin-top: 64px;
   }
 
-  .testimonial-card {
-    background: rgba(255, 255, 255, 0.08);
-    padding: 32px;
-    border-radius: 8px;
-    border: 1px solid rgba(245, 155, 10, 0.2);
+  .review-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(245, 155, 10, 0.15);
+    border-radius: 12px;
+    padding: 24px;
     backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+    overflow: hidden;
   }
 
-  .testimonial-stars {
+  .review-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--saffron), var(--warm-orange), transparent);
+  }
+
+  .review-card.new {
+    border-color: rgba(245, 155, 10, 0.3);
+    background: rgba(255, 255, 255, 0.09);
+  }
+
+  .review-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(245, 155, 10, 0.35);
+    background: rgba(255, 255, 255, 0.11);
+    box-shadow: 0 20px 60px rgba(245, 155, 10, 0.1);
+  }
+
+  .review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .review-author-info {
+    flex: 1;
+  }
+
+  .review-author-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .local-guide-badge {
+    background: linear-gradient(135deg, var(--saffron) 0%, var(--warm-orange) 100%);
+    color: #1a1410;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .review-meta {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .review-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .new-badge {
+    background: var(--saffron);
+    color: #1a1410;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .review-stars {
     color: var(--saffron);
-    font-size: 18px;
-    margin-bottom: 12px;
+    font-size: 14px;
+    letter-spacing: 3px;
+    flex-shrink: 0;
   }
 
-  .testimonial-text {
-    font-size: 16px;
-    line-height: 1.8;
-    margin-bottom: 16px;
+  .review-text {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.88);
     font-style: italic;
   }
 
-  .testimonial-author {
+  .owner-response-section {
+    margin-top: 10px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(245, 155, 10, 0.12);
+  }
+
+  .owner-response-label {
+    font-size: 10px;
     font-weight: 700;
-    font-size: 14px;
+    text-transform: uppercase;
+    color: var(--saffron);
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .owner-response-label::before {
+    content: '🏢';
+    font-size: 12px;
+  }
+
+  .owner-response-text {
+    font-size: 12px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .owner-response-time {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 6px;
   }
 
   /* LOCATION */
@@ -1173,6 +1305,45 @@ const featuredDishes = [
   { id: 7, name: 'Dinner Delight', description: 'Premium platter featuring the best of Indian, Chinese, and fusion cuisine', image: '/images/7.jpg' },
 ];
 
+const ReviewCard = ({ review }) => {
+  return (
+    <div className={`review-card ${review.isNew ? 'new' : ''}`}>
+      <div className="review-header">
+        <div className="review-author-info">
+          <div className="review-author-name">
+            {review.author}
+            {review.isLocalGuide && <span className="local-guide-badge">Local Guide</span>}
+          </div>
+          <div className="review-meta">
+            <div className="review-meta-item">
+              <span>📝</span>
+              <span>{review.reviewCount} review{review.reviewCount !== 1 ? 's' : ''}</span>
+            </div>
+            {review.photos && (
+              <div className="review-meta-item">
+                <span>📷</span>
+                <span>{review.photos}</span>
+              </div>
+            )}
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <div className="review-stars">{'⭐'.repeat(review.rating)}</div>
+          {review.isNew && <span className="new-badge">New</span>}
+        </div>
+      </div>
+
+      <div className="review-text">"{review.reviewText}"</div>
+
+      <div className="owner-response-section">
+        <div className="owner-response-label">The Panchi House</div>
+        <div className="owner-response-text">{review.ownerResponse}</div>
+        <div className="owner-response-time">{review.ownerResponseTime}</div>
+      </div>
+    </div>
+  );
+};
+
 const CardTilt = ({ dish, index }) => {
   const cardRef = useRef(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -1229,10 +1400,216 @@ const CardTilt = ({ dish, index }) => {
   );
 };
 
-const testimonials = [
-  { stars: 5, text: "The biryani is absolutely authentic and delicious! Great ambiance with modern touches.", author: "Priya M." },
-  { stars: 5, text: "Loved it! The Chinese dishes are perfectly balanced, and the service is exceptional.", author: "Rajesh K." },
-  { stars: 5, text: "Hidden gem in ECIL! Celebrated my daughter's birthday here. Highly recommend!", author: "Amelia S." },
+const reviews = [
+  {
+    id: 1,
+    author: "Indira Parla",
+    reviewCount: 3,
+    photos: 2,
+    rating: 5,
+    timeAgo: "a month ago",
+    reviewText: "Had biryani and noodles at Thepanchihouse and honestly, the quality is premium! Perfect aroma, rich taste. Totally worth it!",
+    ownerResponse: "Thank you so much ❤️ Your words truly mean a lot to us. This journey wouldn't feel as special without the love and support from amazing people like you. Dreams feel more beautiful when people like you cheer for them ❤️ Can't wait to see you tomorrow 🤗✨",
+    ownerResponseTime: "a month ago"
+  },
+  {
+    id: 2,
+    author: "Devi K",
+    reviewCount: 3,
+    rating: 5,
+    timeAgo: "a month ago",
+    reviewText: "Panchi house amazing place, with wonderful ambience, food was too good .keep rocking guys ,keep up your smart work 👏 👌 🙌",
+    ownerResponse: "Thank you so much ❤️ Your words truly mean a lot to us. This journey wouldn't feel as special without the love and support from amazing people like you. Can't wait to see you tomorrow 🤗✨",
+    ownerResponseTime: "a month ago"
+  },
+  {
+    id: 3,
+    author: "Sandhya Thalluri Thalluri (Rani)",
+    reviewCount: 1,
+    rating: 5,
+    timeAgo: "a month ago",
+    reviewText: "Very good ambiance and well served. Must try place 👍",
+    ownerResponse: "Thank youu ❤️ Now you have to come tomorrow — special guest treatment guaranteed 😎☕",
+    ownerResponseTime: "a month ago"
+  },
+  {
+    id: 4,
+    author: "thalluri sangeetha",
+    reviewCount: 3,
+    rating: 5,
+    timeAgo: "a month ago",
+    reviewText: "Best place to visit guys🤗",
+    ownerResponse: "Hi Thalluri Sangeetha thank you so much for the 5-star love! We are thrilled you enjoyed your experience at The Panchi House. Our team works hard to make every visit special, and knowing we hit the mark for you makes our day. Can't wait to have you back for another round of your favorites!",
+    ownerResponseTime: "a month ago"
+  },
+  {
+    id: 5,
+    author: "Shravya Singaravelu",
+    reviewCount: 1,
+    rating: 5,
+    timeAgo: "a month ago",
+    reviewText: "Lunch - The food was really amazing",
+    ownerResponse: "Thank you for your wonderful review! We're delighted you enjoyed your experience at The Panchi House. Your support means a lot to us, and we look forward to serving you again soon. 😊",
+    ownerResponseTime: "a month ago"
+  },
+  {
+    id: 6,
+    author: "Himanish Gandhe",
+    reviewCount: 2,
+    photos: 1,
+    rating: 5,
+    timeAgo: "3 days ago",
+    isNew: true,
+    reviewText: "Amazing food and gud place to chill environment is very nice and the teddy is like wow❤️❤️",
+    ownerResponse: "Hi Himanish, thank you so much for the 5-star review! We are thrilled to hear you enjoyed the food and found our place a good spot to chill. Our giant teddy bear is definitely a fan favorite—he'll be happy to know he made your visit special! Hope to see you again soon at The Panchi House.",
+    ownerResponseTime: "3 days ago"
+  },
+  {
+    id: 7,
+    author: "Sweta Prasad",
+    reviewCount: 1,
+    rating: 5,
+    timeAgo: "5 days ago",
+    isNew: true,
+    reviewText: "The food was really tasty and fresh. I enjoyed the experience. Nice people with good service and friendly staff. The ambience was calm and perfect for the family time.",
+    ownerResponse: "Thank you so much for your kind and detailed review, Sweta! We're delighted to hear that you enjoyed our food and found the atmosphere perfect for family time. Our team works hard to provide quick service and a clean environment, so your feedback means a lot to us. We look forward to welcoming you and your family back soon!",
+    ownerResponseTime: "5 days ago"
+  },
+  {
+    id: 8,
+    author: "Koigura Bhagya",
+    reviewCount: 1,
+    rating: 5,
+    timeAgo: "5 days ago",
+    isNew: true,
+    reviewText: "The panchi house has good ambiance and great food",
+    ownerResponse: "Hi Bhagya! Thank you so much for the 5-star rating! We are thrilled to hear you enjoyed the ambiance and the food. It was a pleasure serving you, and we look forward to seeing you again soon!",
+    ownerResponseTime: "5 days ago"
+  },
+  {
+    id: 9,
+    author: "Mangamma Uppala",
+    reviewCount: 1,
+    rating: 5,
+    timeAgo: "5 days ago",
+    isNew: true,
+    reviewText: "Biryani was too good.",
+    ownerResponse: "Hi Mangamma Uppala! We are thrilled to hear you enjoyed the Our Biryani which is one of our Signature Dish. Thank you so much for the 5-star rating! It was a pleasure serving you, and we look forward to seeing you again soon!",
+    ownerResponseTime: "5 days ago"
+  },
+  {
+    id: 10,
+    author: "Sathwik Thotapally",
+    reviewCount: 1,
+    photos: 5,
+    rating: 5,
+    timeAgo: "a week ago",
+    isNew: true,
+    reviewText: "Visited this place for my friend's birthday party. The taste was just more than excellent. Both veg and non veg stood out. The ambience was so nice and we had a great time. The food's taste just takes over everything. Biryani is highly recommended!",
+    ownerResponse: "Hi Sathwik, thank you so much for the 5-star rating! We are thrilled to hear that you enjoyed the birthday celebrations and that our Biryani—both veg and non-veg—lived up to your expectations. It was a pleasure hosting you & your friends, and we're glad you liked the transformation of our space. Looking forward to seeing you and your friends again soon!",
+    ownerResponseTime: "a week ago"
+  },
+  {
+    id: 11,
+    author: "Danda Hema Latha",
+    reviewCount: 3,
+    rating: 5,
+    timeAgo: "a week ago",
+    isNew: true,
+    reviewText: "Food is clean and hygiene, tasty, decent environment, good staff, highly recommended",
+    ownerResponse: "Thank you so much for the 5-star rating, Danda Hema Latha! We are thrilled to hear that you enjoyed the food and found our environment and staff to your liking. Maintaining high hygiene standards is a top priority for us, so your feedback means a lot. We look forward to serving you again soon!",
+    ownerResponseTime: "a week ago"
+  },
+  {
+    id: 12,
+    author: "Tejaswi Mahalaxmi",
+    reviewCount: 1,
+    rating: 5,
+    timeAgo: "a week ago",
+    isNew: true,
+    reviewText: "The feeling of being at home is always there. I had a good overall experience. I love the swing out there and the teddys. Must visit",
+    ownerResponse: "Hi Tejaswi Mahalaxmi, thank you for such a heartwarming review! We're so happy we could give you that 'feeling of being at home'—that is exactly what we strive for at The Panchi House. We'll be sure to tell our teddy bears (and the swing!) that they have a new fan. We can't wait to welcome you back for another cozy lunch soon!",
+    ownerResponseTime: "a week ago"
+  },
+  {
+    id: 13,
+    author: "prashanth pola",
+    reviewCount: 30,
+    isLocalGuide: true,
+    photos: 9,
+    rating: 5,
+    timeAgo: "a week ago",
+    isNew: true,
+    reviewText: "A place where you get delicious food under budget with great hospitality. Thank you panchi house.",
+    ownerResponse: "Wow, thank you for the 5-star rating! We're so glad you loved the food and our hospitality. We can't wait to serve you again soon!",
+    ownerResponseTime: "a week ago"
+  },
+  {
+    id: 14,
+    author: "VJammikuntla",
+    reviewCount: 4,
+    rating: 5,
+    timeAgo: "a week ago",
+    isNew: true,
+    reviewText: "The Panchi House Bistro is one of the best Resto in Ecil for Biryanis and Chinese. Biryanis are flavourful along with quality and quantity. Friendly staff and good service is all a customer need in hunger. Thanks and all the best to Panchi House!",
+    ownerResponse: "Hi VJammikuntla, thank you so much for the fantastic 5-star review! We are thrilled to hear you enjoyed our Biryani and Chinese dishes. Our team works hard to provide both great food and friendly service, so your kind words mean a lot to us. We look forward to serving you again at The Panchi House soon!",
+    ownerResponseTime: "a week ago"
+  },
+  {
+    id: 15,
+    author: "Ghatta Pavan",
+    reviewCount: 7,
+    rating: 5,
+    timeAgo: "a week ago",
+    isNew: true,
+    reviewText: "Had the Fry Piece Biryani here and it was excellent! The chicken was perfectly spiced and crispy, and the rice was incredibly flavorful. Definitely worth a visit if you're a biryani lover.",
+    ownerResponse: "Wow, thank you for the 5-star rating! We're so glad you loved the Fry Piece Biryani—it's definitely a favorite here. We can't wait to serve you again soon!",
+    ownerResponseTime: "a week ago"
+  },
+  {
+    id: 16,
+    author: "globe tv",
+    reviewCount: 1,
+    rating: 5,
+    timeAgo: "a week ago",
+    isNew: true,
+    reviewText: "I love it, the food is simply good enjoyed",
+    ownerResponse: "Thank you for the review! We're so glad to hear you enjoyed the food and had a good dinner with us. We appreciate the feedback on our service and atmosphere as well—we are always working to make the experience even better. Looking forward to serving you again soon!",
+    ownerResponseTime: "a week ago"
+  },
+  {
+    id: 17,
+    author: "Arun Goud",
+    reviewCount: 3,
+    rating: 5,
+    timeAgo: "a week ago",
+    isNew: true,
+    reviewText: "Had a wonderful experience with food and service",
+    ownerResponse: "Thank you so much for the 5-star rating, Arun! It's wonderful to know you had a great experience with our food and service. Your support means a lot to us, and we hope to see you back again very soon!",
+    ownerResponseTime: "a week ago"
+  },
+  {
+    id: 18,
+    author: "Mithin",
+    reviewCount: 2,
+    rating: 5,
+    timeAgo: "2 weeks ago",
+    reviewText: "Good ambience and good service. And to make a note the food is delicious and at affordable prices.",
+    ownerResponse: "Thank you so much. Your words truly mean a lot to us. This journey wouldn't feel as special without the love and support from amazing people like you.",
+    ownerResponseTime: "2 weeks ago"
+  },
+  {
+    id: 19,
+    author: "VARUN BATTERY CARE",
+    reviewCount: 4,
+    isLocalGuide: true,
+    photos: 13,
+    rating: 5,
+    timeAgo: "a month ago",
+    reviewText: "Great food and excellent service!",
+    ownerResponse: "Thank you for 5 star rating. We are glad you enjoyed our food & service. We suggest you to try out most loved dishes - mughlai chicken biryani, fry piece biryani, lemon chicken starter from Panchi House. Love to see you soon sir.😊",
+    ownerResponseTime: "2 weeks ago"
+  }
 ];
 
 export default function PanchiHouse() {
@@ -1256,10 +1633,11 @@ export default function PanchiHouse() {
           <li><a href="#menu">Menu</a></li>
           <li><a href="#gallery">Gallery</a></li>
           <li><a href="#highlights">Features</a></li>
+          <li><a href="#reviews">Reviews</a></li>
           <li><a href="#location">Location</a></li>
           <li><a href="#contact">Contact</a></li>
           <li className="social-nav">
-            <a href="https://www.instagram.com/thepanchihouse/" target="_blank" rel="noopener noreferrer" title="Follow on Instagram">�</a>
+            <a href="https://www.instagram.com/thepanchihouse/" target="_blank" rel="noopener noreferrer" title="Follow on Instagram"><i className="fab fa-instagram"></i></a>
           </li>
         </ul>
       </nav>
@@ -1388,17 +1766,16 @@ export default function PanchiHouse() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section className="testimonials-section fade-in">
-        <div className="section-label" style={{color: 'var(--saffron)'}}>What Customers Say</div>
-        <h2 className="section-title" style={{color: 'white'}}>Loved by <span className="hero-italic" style={{color: 'var(--saffron)'}}>Thousands</span></h2>
-        <div className="testimonials-grid">
-          {testimonials.map((t, i) => (
-            <div key={i} className="testimonial-card">
-              <div className="testimonial-stars">{'⭐'.repeat(t.stars)}</div>
-              <div className="testimonial-text">"{t.text}"</div>
-              <div className="testimonial-author">— {t.author}</div>
-            </div>
+      {/* REVIEWS */}
+      <section className="testimonials-section fade-in" id="reviews">
+        <div className="section-label" style={{color: 'var(--saffron)'}}>Customer Testimonials</div>
+        <h2 className="section-title" style={{color: 'white'}}>Loved by <span className="hero-italic" style={{color: 'var(--saffron)'}}>1000+ Guests</span></h2>
+        <div style={{textAlign: 'center', marginBottom: '48px', color: 'rgba(255,255,255,0.8)'}}>
+          <p style={{fontSize: '16px'}}>5.0 ⭐ Rating with 28+ Genuine Google Reviews</p>
+        </div>
+        <div className="reviews-grid">
+          {reviews.map((review) => (
+            <ReviewCard key={review.id} review={review} />
           ))}
         </div>
       </section>
@@ -1501,7 +1878,7 @@ export default function PanchiHouse() {
             <h4>The Panchi House</h4>
             <p>Authentic biryanis, delicious Chinese cuisine, and unforgettable dining moments.</p>
             <div className="footer-social">
-              <a href="https://www.instagram.com/thepanchihouse/" target="_blank" rel="noopener noreferrer" title="Follow on Instagram">�</a>
+              <a href="https://www.instagram.com/thepanchihouse/" target="_blank" rel="noopener noreferrer" title="Follow on Instagram"><i className="fab fa-instagram"></i></a>
               <a href="https://www.google.com/maps/search/Panchi+House+Secunderabad" target="_blank" rel="noopener noreferrer" title="Google Maps">📍</a>
             </div>
           </div>
