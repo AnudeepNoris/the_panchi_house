@@ -1911,6 +1911,11 @@ export default function PanchiHouse() {
         </div>
         <div className="footer-bottom">
           <p>© 2026 The Panchi House. All rights reserved. | Follow us <a href="https://www.instagram.com/thepanchihouse/" target="_blank" rel="noopener noreferrer">@thepanchihouse</a> | Designed with ❤️ for great food & memories</p>
+          <p style={{marginTop: '12px', textAlign: 'center'}}>
+            <a href="/PROPOSAL.html" target="_blank" rel="noopener noreferrer" style={{color: 'var(--saffron)', textDecoration: 'none', fontWeight: '600'}}>
+              📄 View Website Proposal
+            </a>
+          </p>
         </div>
       </footer>
     </>
