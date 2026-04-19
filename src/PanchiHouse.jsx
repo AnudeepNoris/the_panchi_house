@@ -746,10 +746,221 @@ const styles = `
     font-size: 13px;
   }
 
+  /* 3D TILT GALLERY */
+  .gallery-tilt-section {
+    background: linear-gradient(135deg, #1a1410 0%, #3D2817 50%, #2D2217 100%);
+    padding: 120px 48px;
+    position: relative;
+  }
+
+  .gallery-tilt-section .section-title {
+    color: var(--saffron);
+    text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .gallery-tilt-section .section-label {
+    color: var(--warm-orange);
+  }
+
+  .tilt-gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 48px;
+    margin-top: 80px;
+  }
+
+  .tilt-card {
+    perspective: 1200px;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+    will-change: transform, opacity;
+    height: 480px;
+  }
+
+  .tilt-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+  }
+
+  .tilt-card:hover .tilt-card-inner {
+    box-shadow: 0 30px 80px rgba(245, 155, 10, 0.25);
+  }
+
+  .tilt-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+  }
+
+  .tilt-card:hover .tilt-card-image {
+    transform: scale(1.08) rotate(2deg);
+  }
+
+  .tilt-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(26,20,16,0.4) 0%, rgba(61,40,23,0.6) 100%);
+    backdrop-filter: blur(2px);
+    z-index: 1;
+    transition: all 0.6s ease;
+  }
+
+  .tilt-card:hover .tilt-card-overlay {
+    backdrop-filter: blur(4px);
+    background: linear-gradient(135deg, rgba(245,155,10,0.1) 0%, rgba(232,155,60,0.15) 100%);
+  }
+
+  .tilt-card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px 32px;
+    z-index: 2;
+    transform: translateY(30px);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+  }
+
+  .tilt-card:hover .tilt-card-content {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .tilt-card-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--saffron);
+    margin-bottom: 12px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    letter-spacing: 0.5px;
+  }
+
+  .tilt-card-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.95);
+    line-height: 1.6;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  /* SOUP ITEMS WITH DROPDOWN IMAGES */
+  .soup-items-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 24px;
+  }
+
+  .soup-item-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .soup-item-wrapper:hover {
+    background: rgba(245, 155, 10, 0.03);
+    padding: 20px 12px;
+    padding-bottom: 0;
+    margin: 0 -12px;
+  }
+
+  .soup-item-wrapper:last-child {
+    border-bottom: none;
+  }
+
+  .soup-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+
+  .soup-item .menu-item-name {
+    font-size: 16px;
+    color: var(--charcoal);
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .soup-item .menu-item-price {
+    color: var(--saffron);
+    font-weight: 700;
+    white-space: nowrap;
+    margin-left: 16px;
+    font-size: 16px;
+  }
+
+  .soup-image-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    opacity: 0;
+    transform: perspective(1200px) scaleY(0);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    transform-origin: top;
+    transform-style: preserve-3d;
+    margin-top: 0;
+    box-shadow: 0 0 0 0 rgba(245, 155, 10, 0);
+  }
+
+  .soup-image-container.visible {
+    height: 240px;
+    opacity: 1;
+    transform: perspective(1200px) scaleY(1) rotateX(0deg) rotateY(0deg);
+    margin-top: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease, transform 0.04s linear;
+  }
+
+  .soup-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.06s linear;
+    transform-style: preserve-3d;
+    will-change: transform, filter;
+    filter: brightness(1);
+  }
+
+  .soup-image-container.visible:hover .soup-image {
+    filter: brightness(1.05);
+  }
+
+  .soup-image-description {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(26,20,16,0.95), transparent);
+    color: var(--saffron);
+    padding: 20px 16px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+
   /* RESPONSIVE */
   @media (max-width: 768px) {
     nav { padding: 14px 24px; }
-    .nav-links { gap: 20px; }
+    .nav-links { gap: 20px; font-size: 11px; }
     .social-nav { margin-left: 0; }
     section { padding: 80px 24px; }
     .hero { padding: 80px 24px 120px; }
@@ -761,8 +972,20 @@ const styles = `
     }
     .form-row { grid-template-columns: 1fr; }
     .footer-content { grid-template-columns: 1fr; }
-    .gallery-3d-container { height: 400px; margin-top: 40px; margin-bottom: 100px; }
-    .gallery-item-3d { max-width: 100%; }
+    .tilt-gallery-container { 
+      grid-template-columns: 1fr; 
+      gap: 32px;
+      margin-top: 40px;
+    }
+    .tilt-card { height: 360px; }
+    .gallery-tilt-section { padding: 60px 24px; }
+    .soup-item-wrapper { 
+      grid-template-columns: 1fr; 
+      gap: 20px;
+    }
+    .soup-image-container.visible {
+      height: 180px;
+    }
   }
 
   .fade-in {
@@ -778,11 +1001,11 @@ const styles = `
 // Complete Menu Data
 const completeMenu = {
   soups: [
-    { name: 'Veg Soup', price: '69' },
-    { name: 'Veg Corn Soup', price: '69' },
-    { name: 'Chicken Soup', price: '89' },
-    { name: 'Ginger Chicken Soup', price: '99' },
-    { name: 'Garlic Chicken Soup', price: '99' },
+    { name: 'Veg Soup', price: '69', image: '/images/Veg soup.png', description: 'Clear, fresh, vibrant vegetable goodness' },
+    { name: 'Veg Corn Soup', price: '69', image: '/images/Veg corn soup.png', description: 'Creamy, golden, sweet corn delight' },
+    { name: 'Chicken Soup', price: '89', image: '/images/Chicken soup.png', description: 'Clear, tender, aromatic chicken comfort' },
+    { name: 'Ginger Chicken Soup', price: '99', image: '/images/Ginger chicken soup.png', description: 'Spiced, aromatic, warming ginger essence' },
+    { name: 'Garlic Chicken Soup', price: '99', image: '/images/Garlic chicken soup.png', description: 'Rich, golden, aromatic garlic treasure' },
   ],
   vegStarters: [
     { name: 'Veg Manchuria', price: '129' },
@@ -867,19 +1090,144 @@ const completeMenu = {
   ],
 };
 
-const MenuCategory = ({ title, items }) => (
-  <div className="menu-category">
-    <h3 className="menu-category-title">{title}</h3>
-    <div className="menu-items-grid">
-      {items.map((item, idx) => (
-        <div key={idx} className="menu-item">
-          <div className="menu-item-name">{item.name}</div>
-          <div className="menu-item-price">₹{item.price}</div>
-        </div>
-      ))}
+const SoupMenuItem = ({ item, idx }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const containerRef = useRef(null);
+
+  const handleMouseMove = (e) => {
+    if (!containerRef.current || !isHovered) return;
+    const rect = containerRef.current.querySelector('.soup-image-container')?.getBoundingClientRect();
+    if (!rect) return;
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const rotateX = (e.clientY - centerY) / 10;
+    const rotateY = (centerX - e.clientX) / 10;
+    setTilt({ x: rotateX, y: rotateY });
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setTilt({ x: 0, y: 0 });
+  };
+
+  return (
+    <div 
+      ref={containerRef}
+      className="soup-item-wrapper"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={handleMouseLeave}
+      onMouseMove={handleMouseMove}
+    >
+      <div className="soup-item">
+        <div className="menu-item-name">{item.name}</div>
+        <div className="menu-item-price">₹{item.price}</div>
+      </div>
+      <div className={`soup-image-container ${isHovered ? 'visible' : ''}`}
+        style={isHovered ? {
+          transform: `perspective(1200px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(1.02)`
+        } : {}}>
+        <img src={item.image} alt={item.name} className="soup-image" />
+        <div className="soup-image-description">{item.description}</div>
+      </div>
     </div>
-  </div>
-);
+  );
+}
+
+const MenuCategory = ({ title, items, isSoups }) => {
+  if (isSoups) {
+    return (
+      <div className="menu-category">
+        <h3 className="menu-category-title">{title}</h3>
+        <div className="soup-items-grid">
+          {items.map((item, idx) => (
+            <SoupMenuItem key={idx} item={item} idx={idx} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="menu-category">
+      <h3 className="menu-category-title">{title}</h3>
+      <div className="menu-items-grid">
+        {items.map((item, idx) => (
+          <div key={idx} className="menu-item">
+            <div className="menu-item-name">{item.name}</div>
+            <div className="menu-item-price">₹{item.price}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const featuredDishes = [
+  { id: 1, name: 'Biryani Special', description: 'Fragrant basmati rice layered with tender meat, aromatic spices, and slow-cooked to perfection', image: '/images/1.jpg' },
+  { id: 2, name: 'Paneer Majestic', description: 'Premium cottage cheese cubes in a rich, creamy sauce with perfect blend of spices', image: '/images/2.jpg' },
+  { id: 3, name: 'Chicken 65', description: 'Crispy, fiery chicken appetizer coated in aromatic flakes and fresh green chilies', image: '/images/3.jpg' },
+  { id: 4, name: 'Hakka Noodles', description: 'Perfectly wok-tossed noodles with fresh vegetables and authentic Chinese flavors', image: '/images/4.jpg' },
+  { id: 5, name: 'Family Feast', description: 'Complete meal combo with biryani, starters, noodles, and traditional side dishes', image: '/images/5.jpg' },
+  { id: 6, name: 'Chef\'s Selection', description: 'Seasonal delicacies and signature dishes curated by our master chef daily', image: '/images/6.jpg' },
+  { id: 7, name: 'Dinner Delight', description: 'Premium platter featuring the best of Indian, Chinese, and fusion cuisine', image: '/images/7.jpg' },
+];
+
+const CardTilt = ({ dish, index }) => {
+  const cardRef = useRef(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    if (cardRef.current) observer.observe(cardRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!cardRef.current || !isVisible) return;
+      const rect = cardRef.current.getBoundingClientRect();
+      const centerY = window.innerHeight / 2;
+      const distFromCenter = rect.top - centerY;
+      const scrollProgress = -distFromCenter / (window.innerHeight / 2);
+      
+      setTilt({
+        x: -scrollProgress * 12,
+        y: (Math.random() - 0.5) * 8,
+      });
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isVisible]);
+
+  return (
+    <div
+      ref={cardRef}
+      className="tilt-card"
+      style={{
+        transform: `perspective(1200px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) rotateZ(0deg) scale(${1 + Math.abs(tilt.x) * 0.002})`,
+        opacity: isVisible ? 1 : 0.3,
+      }}
+    >
+      <div className="tilt-card-inner">
+        <img src={dish.image} alt={dish.name} className="tilt-card-image" />
+        <div className="tilt-card-overlay"></div>
+        <div className="tilt-card-content">
+          <h3 className="tilt-card-title">{dish.name}</h3>
+          <p className="tilt-card-desc">{dish.description}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const testimonials = [
   { stars: 5, text: "The biryani is absolutely authentic and delicious! Great ambiance with modern touches.", author: "Priya M." },
@@ -902,15 +1250,16 @@ export default function PanchiHouse() {
 
       {/* NAV */}
       <nav className={scrolled ? "scrolled" : ""}>
-        <a href="#" className="nav-brand">🍽️ Panchi House</a>
+        <a href="#" className="nav-brand">🍽️ The Panchi House</a>
         <ul className="nav-links">
           <li><a href="#about">About</a></li>
           <li><a href="#menu">Menu</a></li>
+          <li><a href="#gallery">Gallery</a></li>
           <li><a href="#highlights">Features</a></li>
           <li><a href="#location">Location</a></li>
           <li><a href="#contact">Contact</a></li>
           <li className="social-nav">
-            <a href="https://www.instagram.com/thepanchihouse/" target="_blank" rel="noopener noreferrer" title="Follow on Instagram">📷</a>
+            <a href="https://www.instagram.com/thepanchihouse/" target="_blank" rel="noopener noreferrer" title="Follow on Instagram">�</a>
           </li>
         </ul>
       </nav>
@@ -978,7 +1327,7 @@ export default function PanchiHouse() {
         <h2 className="section-title fade-in">Complete <span className="hero-italic">Menu</span></h2>
         
         <div className="menu-container fade-in">
-          <MenuCategory title="🍲 Soups" items={completeMenu.soups} />
+          <MenuCategory title="🍲 Soups" items={completeMenu.soups} isSoups={true} />
           <MenuCategory title="🥘 Veg Starters" items={completeMenu.vegStarters} />
           <MenuCategory title="🍗 Non Veg Starters" items={completeMenu.nonVegStarters} />
           <MenuCategory title="🍚 Veg Fried Rice" items={completeMenu.vegFriedRice} />
@@ -987,6 +1336,17 @@ export default function PanchiHouse() {
           <MenuCategory title="🐔 Non-Veg Biryanis" items={completeMenu.nonVegBiryanis} />
           <MenuCategory title="🌾 Veg Biryanis" items={completeMenu.vegBiryanis} />
           <MenuCategory title="👨‍👩‍👧‍👦 Family Packs" items={completeMenu.familyPacks} />
+        </div>
+      </section>
+
+      {/* FEATURED DISHES - 3D TILT GALLERY */}
+      <section className="gallery-tilt-section" id="gallery">
+        <div className="section-label fade-in">Visual Experience</div>
+        <h2 className="section-title fade-in">Featured <span className="hero-italic">Dishes</span></h2>
+        <div className="tilt-gallery-container">
+          {featuredDishes.map((dish, idx) => (
+            <CardTilt key={dish.id} dish={dish} index={idx} />
+          ))}
         </div>
       </section>
 
@@ -1141,7 +1501,7 @@ export default function PanchiHouse() {
             <h4>The Panchi House</h4>
             <p>Authentic biryanis, delicious Chinese cuisine, and unforgettable dining moments.</p>
             <div className="footer-social">
-              <a href="https://www.instagram.com/thepanchihouse/" target="_blank" rel="noopener noreferrer" title="Follow on Instagram">📷</a>
+              <a href="https://www.instagram.com/thepanchihouse/" target="_blank" rel="noopener noreferrer" title="Follow on Instagram">�</a>
               <a href="https://www.google.com/maps/search/Panchi+House+Secunderabad" target="_blank" rel="noopener noreferrer" title="Google Maps">📍</a>
             </div>
           </div>
@@ -1149,6 +1509,7 @@ export default function PanchiHouse() {
             <h4>Quick Links</h4>
             <a href="#about">About Us</a>
             <a href="#menu">Menu</a>
+            <a href="#gallery">Gallery</a>
             <a href="#highlights">Features</a>
             <a href="#location">Location</a>
             <a href="#contact">Contact</a>
