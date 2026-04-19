@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import biryaniImg from "./images/menu-10-biryani.jpg";
-import chineseImg from "./images/menu-14-chinese.jpg";
+import * as pdfjsLib from 'pdfjs-dist';
+
+// Set up PDF.js worker
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
 const FONTS = `
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Lora:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap');
@@ -50,22 +52,25 @@ const styles = `
     right: 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 18px 60px;
-    background: rgba(250, 250, 248, 0.98);
+    background: linear-gradient(135deg, rgba(26, 20, 16, 0.95) 0%, rgba(76, 58, 40, 0.95) 100%);
     backdrop-filter: blur(30px);
-    border-bottom: 1px solid rgba(212, 165, 116, 0.2);
+    border-bottom: 2px solid var(--saffron);
     z-index: 1000;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   }
 
   .nav-brand {
     font-family: var(--font-display);
     font-size: 28px;
     font-weight: 700;
-    color: var(--accent);
+    color: var(--saffron);
     text-decoration: none;
     letter-spacing: 1px;
+    position: absolute;
+    left: 60px;
   }
 
   .nav-links {
@@ -80,7 +85,7 @@ const styles = `
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--charcoal);
+    color: white;
     text-decoration: none;
     transition: all 0.3s;
     position: relative;
@@ -97,22 +102,31 @@ const styles = `
     transition: width 0.3s;
   }
 
+  .nav-links a:hover {
+    color: var(--saffron);
+  }
+
   .nav-links a:hover::after { width: 100%; }
 
   .social-nav {
     display: flex;
     gap: 16px;
     margin-left: 20px;
+    position: absolute;
+    right: 60px;
   }
 
   .social-nav a {
     font-size: 18px;
     text-decoration: none;
-    color: var(--accent);
-    transition: transform 0.2s;
+    color: var(--saffron);
+    transition: all 0.2s;
   }
 
-  .social-nav a:hover { transform: scale(1.2); }
+  .social-nav a:hover { 
+    transform: scale(1.2);
+    color: white;
+  }
 
   /* HERO */
   .hero {
@@ -123,7 +137,9 @@ const styles = `
     padding: 120px 48px;
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, #FAF6F1 0%, #FFE8D6 50%, #F5EFEA 100%);
+    background: linear-gradient(135deg, rgba(26, 20, 16, 0.75) 0%, rgba(76, 58, 40, 0.75) 50%, rgba(61, 40, 23, 0.75) 100%), 
+                url('/images/6.png') center/cover no-repeat fixed;
+    background-attachment: fixed;
   }
 
   .hero::before {
@@ -131,8 +147,7 @@ const styles = `
     position: absolute;
     inset: 0;
     background: 
-      radial-gradient(ellipse 80% 60% at 20% 30%, rgba(232, 155, 60, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse 70% 50% at 80% 70%, rgba(200, 90, 23, 0.1) 0%, transparent 50%);
+      linear-gradient(to right, rgba(232, 155, 60, 0.1) 0%, transparent 50%, rgba(200, 90, 23, 0.08) 100%);
     pointer-events: none;
   }
 
@@ -141,7 +156,7 @@ const styles = `
     position: absolute;
     inset: 0;
     background-image: 
-      radial-gradient(circle at 2px 2px, rgba(212, 165, 116, 0.05) 1px, transparent 1px);
+      radial-gradient(circle at 2px 2px, rgba(245, 155, 10, 0.02) 1px, transparent 1px);
     background-size: 50px 50px;
     pointer-events: none;
   }
@@ -157,23 +172,26 @@ const styles = `
     font-size: clamp(52px, 10vw, 100px);
     font-weight: 800;
     line-height: 1;
-    color: var(--charcoal);
+    color: white;
     margin-bottom: 20px;
     letter-spacing: -1px;
+    text-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   }
 
   .hero-italic { 
     color: var(--saffron); 
     font-style: italic;
     display: block;
+    text-shadow: 0 4px 12px rgba(245, 155, 10, 0.3);
   }
 
   .hero-sub {
     font-size: 19px;
-    color: var(--text-light);
+    color: rgba(255, 255, 255, 0.95);
     max-width: 650px;
     margin-bottom: 48px;
     line-height: 1.8;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
 
   .hero-cta {
@@ -199,23 +217,28 @@ const styles = `
   .btn-primary {
     background: linear-gradient(135deg, #F59B0A 0%, #E89B3C 100%);
     color: white;
-    box-shadow: 0 8px 16px rgba(232, 155, 60, 0.3);
+    box-shadow: 0 12px 24px rgba(232, 155, 60, 0.4);
+    border: none;
   }
 
   .btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 16px 32px rgba(232, 155, 60, 0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(232, 155, 60, 0.6);
   }
 
   .btn-secondary {
-    border: 2px solid var(--accent);
-    color: var(--accent);
-    background: transparent;
+    border: 2.5px solid var(--saffron);
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
   }
 
   .btn-secondary:hover {
-    background: rgba(200, 90, 23, 0.08);
-    transform: translateY(-3px);
+    background: var(--saffron);
+    color: white;
+    border-color: var(--saffron);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(245, 155, 10, 0.3);
   }
 
   /* SECTIONS */
@@ -301,6 +324,70 @@ const styles = `
   /* MENU */
   .menu-section {
     background: linear-gradient(135deg, #FAF6F1 0%, #FFE8D6 100%);
+  }
+
+  .menu-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+    margin-top: 60px;
+  }
+
+  .menu-category {
+    background: white;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(26, 20, 16, 0.1);
+    border-left: 5px solid var(--saffron);
+    transition: all 0.3s ease;
+  }
+
+  .menu-category:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(26, 20, 16, 0.15);
+  }
+
+  .menu-category-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--saffron);
+  }
+
+  .menu-items-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dotted rgba(212, 165, 116, 0.3);
+  }
+
+  .menu-item:last-child {
+    border-bottom: none;
+  }
+
+  .menu-item-name {
+    font-size: 15px;
+    color: var(--charcoal);
+    font-weight: 500;
+    flex: 1;
+  }
+
+  .menu-item-price {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--saffron);
+    margin-left: 16px;
+    white-space: nowrap;
   }
 
   .menu-images {
@@ -667,12 +754,15 @@ const styles = `
     section { padding: 80px 24px; }
     .hero { padding: 80px 24px 120px; }
     .about-layout,
-    .location-grid { 
+    .location-grid,
+    .pdf-menu-container { 
       grid-template-columns: 1fr; 
       gap: 48px;
     }
     .form-row { grid-template-columns: 1fr; }
     .footer-content { grid-template-columns: 1fr; }
+    .gallery-3d-container { height: 400px; margin-top: 40px; margin-bottom: 100px; }
+    .gallery-item-3d { max-width: 100%; }
   }
 
   .fade-in {
@@ -684,6 +774,112 @@ const styles = `
     to { opacity: 1; }
   }
 `;
+
+// Complete Menu Data
+const completeMenu = {
+  soups: [
+    { name: 'Veg Soup', price: '69' },
+    { name: 'Veg Corn Soup', price: '69' },
+    { name: 'Chicken Soup', price: '89' },
+    { name: 'Ginger Chicken Soup', price: '99' },
+    { name: 'Garlic Chicken Soup', price: '99' },
+  ],
+  vegStarters: [
+    { name: 'Veg Manchuria', price: '129' },
+    { name: 'Crispy Corn', price: '129' },
+    { name: 'Chilli Veg', price: '139' },
+    { name: 'Paneer Majestic', price: '269' },
+    { name: 'Chilli Paneer', price: '199' },
+    { name: 'Chilli Mushroom', price: '199' },
+    { name: 'Mushroom 65', price: '199' },
+    { name: 'Mushroom Manchuria', price: '199' },
+  ],
+  nonVegStarters: [
+    { name: 'Chicken 65', price: '179' },
+    { name: 'Chilli Chicken', price: '179' },
+    { name: 'Ginger Chicken', price: '179' },
+    { name: 'Lemon Chicken', price: '179' },
+    { name: 'Chicken NOF Garlic', price: '179' },
+    { name: 'Chicken Majestic', price: '229' },
+    { name: 'Chilli Lollipop', price: '199' },
+    { name: 'Dragon Chicken', price: '199' },
+    { name: 'Chicken Manchuria', price: '189' },
+  ],
+  vegFriedRice: [
+    { name: 'Veg Fried Rice', price: '99' },
+    { name: 'Veg Ginger Fried Rice', price: '129' },
+    { name: 'Veg Schezwan Fried Rice', price: '129' },
+    { name: 'Veg Manchuria Fried Rice', price: '129' },
+    { name: 'Mixed Veg Fried Rice', price: '159' },
+    { name: 'Chilli Paneer Fried Rice', price: '159' },
+    { name: 'Paneer Ginger Fried Rice', price: '159' },
+    { name: 'Chilli Mushroom Fried Rice', price: '169' },
+  ],
+  vegNoodles: [
+    { name: 'Veg Noodles', price: '99' },
+    { name: 'Veg Manchurian Noodles', price: '129' },
+    { name: 'Veg Schezwan Noodles', price: '129' },
+    { name: 'Paneer Punch Noodles', price: '149' },
+    { name: 'Mushroom Noodles', price: '169' },
+  ],
+  eggRiceNoodles: [
+    { name: 'Egg Soft Noodles', price: '129' },
+    { name: 'Egg Fried Rice', price: '129' },
+    { name: 'Egg Shezwan Noodles', price: '139' },
+    { name: 'Egg Shezwan Rice', price: '139' },
+    { name: 'Spl Egg Noodles', price: '149' },
+    { name: 'Spl Egg Fried Rice', price: '149' },
+    { name: 'Chicken Soft Noodles', price: '149' },
+    { name: 'Chicken Fried Rice', price: '149' },
+    { name: 'Egg Paneer Noodles', price: '159' },
+    { name: 'Egg Paneer Rice', price: '159' },
+    { name: 'Chicken Ginger Noodles', price: '159' },
+    { name: 'Chicken Schezwan Noodles', price: '159' },
+    { name: 'Chicken Fry Piece Fried Rice', price: '169' },
+    { name: 'Chicken Schezwan Fried Rice', price: '169' },
+    { name: 'Egg Ginger Noodles', price: '159' },
+    { name: 'Egg Ginger Rice', price: '159' },
+    { name: 'Mixed Non-Veg Fried Rice', price: '249' },
+    { name: 'Chicken Lollipop Fried Rice', price: '229' },
+  ],
+  nonVegBiryanis: [
+    { name: 'Chicken Dum Biryani', price: '179' },
+    { name: 'Chicken Fry Piece Biryani', price: '179' },
+    { name: 'Spl Chicken Biryani', price: '229' },
+    { name: 'Chicken Lollipop Biryani', price: '229' },
+    { name: 'Mughlai Chicken Biryani', price: '249' },
+    { name: 'Mutton Biryani', price: '299' },
+  ],
+  vegBiryanis: [
+    { name: 'Veg Biryani', price: '149' },
+    { name: 'Spl Veg Biryani', price: '169' },
+    { name: 'Paneer Biryani', price: '219' },
+    { name: 'Mushroom Biryani', price: '249' },
+  ],
+  familyPacks: [
+    { name: 'Chicken Dum Biryani Family Pack', price: '499' },
+    { name: 'Chicken Fry Piece Biryani Family Pack', price: '499' },
+    { name: 'Veg Biryani Family Pack', price: '449' },
+    { name: 'Spl Chicken Biryani Family Pack', price: '599' },
+    { name: 'Chicken Lollipop Biryani Family Pack', price: '599' },
+    { name: 'Mughlai Chicken Biryani Family Pack', price: '649' },
+    { name: 'Mutton Biryani Family Pack', price: '799' },
+  ],
+};
+
+const MenuCategory = ({ title, items }) => (
+  <div className="menu-category">
+    <h3 className="menu-category-title">{title}</h3>
+    <div className="menu-items-grid">
+      {items.map((item, idx) => (
+        <div key={idx} className="menu-item">
+          <div className="menu-item-name">{item.name}</div>
+          <div className="menu-item-price">₹{item.price}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
 
 const testimonials = [
   { stars: 5, text: "The biryani is absolutely authentic and delicious! Great ambiance with modern touches.", author: "Priya M." },
@@ -774,56 +970,23 @@ export default function PanchiHouse() {
         </div>
       </section>
 
+
+
       {/* MENU */}
       <section className="menu-section" id="menu">
         <div className="section-label fade-in">Culinary Journey</div>
-        <h2 className="section-title fade-in">Our <span className="hero-italic">Menu</span></h2>
+        <h2 className="section-title fade-in">Complete <span className="hero-italic">Menu</span></h2>
         
-        <div className="menu-images fade-in">
-          <div className="menu-image-box">
-            <img src={biryaniImg} alt="Signature Biryanis" />
-          </div>
-          <div className="menu-image-box">
-            <img src={chineseImg} alt="Chinese Delights" />
-          </div>
-        </div>
-
-        <div className="menu-grid fade-in">
-          <div className="menu-card">
-            <div className="menu-card-title">🍝 Signature Biryanis</div>
-            <div className="menu-card-items">
-              • Mughlai Chicken Biryani<br/>
-              • Fry Piece Biryani<br/>
-              • Hyderabadi Biryani<br/>
-              • Mixed Vegetable Biryani<br/>
-              • Premium basmati & aromatic spices
-            </div>
-            <div className="menu-price">₹200 - ₹300</div>
-          </div>
-
-          <div className="menu-card">
-            <div className="menu-card-title">🥢 Chinese Delights</div>
-            <div className="menu-card-items">
-              • Lemon Chicken<br/>
-              • Chilli Garlic Chicken<br/>
-              • Schezwan Noodles<br/>
-              • Hakka Rice<br/>
-              • Soft Noodle & Crispy Chow Mein
-            </div>
-            <div className="menu-price">₹150 - ₹250</div>
-          </div>
-
-          <div className="menu-card">
-            <div className="menu-card-title">🥬 Vegan Options</div>
-            <div className="menu-card-items">
-              • Paneer Pakora<br/>
-              • Veg Fried Rice<br/>
-              • Chilli Noodles<br/>
-              • Paneer Biryani<br/>
-              • Fresh & Healthy Choices
-            </div>
-            <div className="menu-price">₹120 - ₹200</div>
-          </div>
+        <div className="menu-container fade-in">
+          <MenuCategory title="🍲 Soups" items={completeMenu.soups} />
+          <MenuCategory title="🥘 Veg Starters" items={completeMenu.vegStarters} />
+          <MenuCategory title="🍗 Non Veg Starters" items={completeMenu.nonVegStarters} />
+          <MenuCategory title="🍚 Veg Fried Rice" items={completeMenu.vegFriedRice} />
+          <MenuCategory title="🍝 Veg Hakka Noodles" items={completeMenu.vegNoodles} />
+          <MenuCategory title="🥚 Egg & Chicken Rice/Noodles" items={completeMenu.eggRiceNoodles} />
+          <MenuCategory title="🐔 Non-Veg Biryanis" items={completeMenu.nonVegBiryanis} />
+          <MenuCategory title="🌾 Veg Biryanis" items={completeMenu.vegBiryanis} />
+          <MenuCategory title="👨‍👩‍👧‍👦 Family Packs" items={completeMenu.familyPacks} />
         </div>
       </section>
 
